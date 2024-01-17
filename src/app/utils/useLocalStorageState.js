@@ -5,8 +5,10 @@ import { useState, useEffect } from "react";
 export function useLocalStorageState(initialState, key) {
   // * lazy evaluation
   const [value, setValue] = useState(() => {
-    const storedValues = localStorage.getItem(key);
-    return storedValues ? JSON.parse(storedValues) : initialState;
+    if (typeof window !== "undefined") {
+      const storedValues = localStorage.getItem(key);
+      return storedValues ? JSON.parse(storedValues) : initialState;
+    }
   });
 
   useEffect(() => {
